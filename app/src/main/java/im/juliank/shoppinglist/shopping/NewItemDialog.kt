@@ -29,9 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import im.juliank.shoppinglist.ui.screen.shoppinglist.Category
-import im.juliank.shoppinglist.ui.screen.shoppinglist.Item
-import im.juliank.shoppinglist.ui.screen.shoppinglist.ShoppingListViewModel
 
 @Composable
 fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListViewModel = viewModel()) {
@@ -61,7 +58,7 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("Item name") },
-                    isError = name != ""
+                    isError = !validName
                 )
                 TextField(
                     value = price,
@@ -93,13 +90,11 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                 Button(
                     onClick = {
                         viewModel.addItem(
-                            Item(
-                                category,
-                                name,
-                                description,
-                                price.toFloat(),
-                                bought
-                            )
+                            category,
+                            name,
+                            description,
+                            price.toFloat(),
+                            bought
                         )
                         onDismissRequest()
                     },

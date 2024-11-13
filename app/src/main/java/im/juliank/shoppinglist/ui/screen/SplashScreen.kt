@@ -1,4 +1,4 @@
-package im.juliank.shoppinglist.ui.screen.splash
+package im.juliank.shoppinglist.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
