@@ -78,7 +78,12 @@ fun ItemDialog(
     var bought by remember { mutableStateOf(prefilledStatus) }
 
     val validName = name != ""
-    var validPrice by remember { mutableStateOf(false) }
+    var validPrice = true
+    try {
+        price.toFloat()
+    } catch (_: NumberFormatException) {
+        validPrice = false
+    }
 
     val valid = validName && validPrice
 
@@ -103,12 +108,6 @@ fun ItemDialog(
                     value = price,
                     onValueChange = {
                         price = it
-                        try {
-                            price.toFloat()
-                            validPrice = true
-                        } catch (_: NumberFormatException) {
-                            validPrice = false
-                        }
                     },
                     label = { Text("Price") },
                     isError = !validPrice
