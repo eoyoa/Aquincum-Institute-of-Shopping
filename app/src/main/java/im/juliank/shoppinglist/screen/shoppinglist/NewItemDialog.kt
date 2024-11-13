@@ -38,6 +38,8 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
     var category by remember { mutableStateOf(Category.FOOD) }
     var bought by remember { mutableStateOf(false) }
 
+    var validPrice by remember { mutableStateOf(false) }
+
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
@@ -56,8 +58,17 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                 )
                 TextField(
                     value = price,
-                    onValueChange = { price = it },
-                    label = { Text("Price") }
+                    onValueChange = {
+                        price = it
+                        try {
+                            price.toFloat()
+                            validPrice = true
+                        } catch (_: NumberFormatException) {
+                            validPrice = false
+                        }
+                    },
+                    label = { Text("Price") },
+                    isError = !validPrice
                 )
                 TextField(
                     value = description,
@@ -71,10 +82,13 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                     Checkbox(checked = bought, onCheckedChange = { bought = it })
                     Text("Bought")
                 }
-                Button(onClick = {
-                    viewModel.addItem(Item(category, name, description, price.toFloat(), bought))
-                    onDismissRequest()
-                }) {
+                Button(
+                    onClick = {
+                        viewModel.addItem(Item(category, name, description, price.toFloat(), bought))
+                        onDismissRequest()
+                    },
+                    enabled = validPrice
+                ) {
                     Text("Add item")
                 }
             }

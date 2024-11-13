@@ -11,6 +11,10 @@ class ShoppingListViewModel: ViewModel() {
         items.add(item)
         Log.d("ADD_ITEM", "done, items are now $items")
     }
+
+    fun getAllItems(): List<Item> {
+        return items
+    }
 }
 
 data class Item(val category: Category, val name: String, val description: String, val price: Float, val status: Boolean)
