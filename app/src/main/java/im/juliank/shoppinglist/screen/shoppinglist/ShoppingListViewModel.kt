@@ -17,7 +17,7 @@ class ShoppingListViewModel: ViewModel() {
     }
 }
 
-data class Item(val category: Category, val name: String, val description: String, val price: Float, val status: Boolean)
+data class Item(val category: Category, val name: String, val description: String?, val price: Float, val status: Boolean)
 
 enum class Category {
     FOOD,

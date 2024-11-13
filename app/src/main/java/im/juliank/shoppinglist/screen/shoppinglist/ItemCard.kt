@@ -40,7 +40,9 @@ fun ItemCard(item: Item) {
             ) {
                 Text(item.name)
                 Text("\$${item.price}")
-                Text(item.description)
+                item.description?.let {
+                    Text(it)
+                }
             }
             Checkbox(
                 item.status,
@@ -55,5 +57,5 @@ fun ItemCard(item: Item) {
 @Preview
 @Composable
 fun ItemCardPreview() {
-    ItemCard(Item(Category.FOOD, "Test name", "This is a test description", 123.45f, true))
+    ItemCard(Item(Category.FOOD, "Test name", null, 123.45f, true))
 }

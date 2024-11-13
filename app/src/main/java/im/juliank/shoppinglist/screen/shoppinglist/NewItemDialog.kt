@@ -34,11 +34,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListViewModel = viewModel()) {
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var description: String? by remember { mutableStateOf(null) }
     var category by remember { mutableStateOf(Category.FOOD) }
     var bought by remember { mutableStateOf(false) }
 
+    val validName = name != ""
     var validPrice by remember { mutableStateOf(false) }
+
+    val valid = validName && validPrice
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
@@ -54,7 +57,8 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                 TextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Item name") }
+                    label = { Text("Item name") },
+                    isError = name != ""
                 )
                 TextField(
                     value = price,
@@ -71,9 +75,10 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                     isError = !validPrice
                 )
                 TextField(
-                    value = description,
-                    onValueChange = { description = it },
-                    label = { Text("Description") }
+                    value = description ?: "",
+                    onValueChange = { description = if (it != "") it else null },
+                    label = { Text("Description (optional)") },
+                    // descriptions should be optional
                 )
                 CategoryDropdown(modifier = Modifier.fillMaxWidth(), preSelected = category) { category = it }
                 Row (
@@ -87,7 +92,7 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                         viewModel.addItem(Item(category, name, description, price.toFloat(), bought))
                         onDismissRequest()
                     },
-                    enabled = validPrice
+                    enabled = valid
                 ) {
                     Text("Add item")
                 }
