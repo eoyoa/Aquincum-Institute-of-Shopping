@@ -29,9 +29,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import java.util.UUID
 
 @Composable
-fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListViewModel = viewModel()) {
+fun NewItemDialog(onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
+    ItemDialog(
+        onSubmit = {
+            viewModel.addItem(it)
+        },
+        buttonText = "Add Item",
+        onDismissRequest = onDismissRequest
+    )
+}
+
+@Composable
+fun ItemDialog(itemId: UUID = UUID.randomUUID(), onSubmit: (Item) -> Unit, buttonText: String, onDismissRequest: () -> Unit = {}) {
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var description: String? by remember { mutableStateOf(null) }
@@ -89,13 +101,7 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                 }
                 Button(
                     onClick = {
-                        viewModel.addItem(
-                            category,
-                            name,
-                            description,
-                            price.toFloat(),
-                            bought
-                        )
+                        onSubmit(Item(itemId, category, name, description, price.toFloat(), bought))
                         onDismissRequest()
                     },
                     enabled = valid
