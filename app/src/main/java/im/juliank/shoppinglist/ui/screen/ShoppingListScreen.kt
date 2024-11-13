@@ -26,9 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import im.juliank.shoppinglist.R
 import im.juliank.shoppinglist.data.Category
 import im.juliank.shoppinglist.data.ItemEntity
 import im.juliank.shoppinglist.shopping.EditItemDialog
@@ -62,7 +64,7 @@ fun ShoppingListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Shopping List")
+                    Text(stringResource(R.string.shopping_screen_title))
                 },
                 actions = {
                     IconButton(onClick = {
@@ -96,7 +98,11 @@ fun ShoppingListScreen(
         Column(
             modifier = modifier.padding(padding)
         ) {
-            if (allItems.isEmpty()) Text("No${if (filteredCategory != null) " filtered" else ""} items")
+            if (allItems.isEmpty()) Text(
+                stringResource(
+                    R.string.no_items,
+                    if (filteredCategory != null) stringResource(R.string.no_items_filtered) else ""
+                ))
             else {
                 LazyColumn(
                     modifier = modifier.fillMaxHeight()

@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Aquincum Institute of Shopping</string>
     <string name="shopping_list_logo">Shopping List Logo</string>
+    <string name="shopping_screen_title">Shopping List</string>
+    <string name="no_items">No%1$s items</string>
+    <string name="no_items_filtered">" filtered"</string>
+    <string name="add_item_button">Add item</string>
+    <string name="edit_item_button">Edit item</string>
+    <string name="dialog_item_name">Item name</string>
+    <string name="dialog_price">Price</string>
+    <string name="dialog_description">Description (optional)</string>
+    <string name="dialog_status">Bought</string>
 </resources>
