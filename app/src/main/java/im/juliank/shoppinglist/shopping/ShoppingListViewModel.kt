@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import im.juliank.shoppinglist.data.Category
 import im.juliank.shoppinglist.data.ItemDAO
 import im.juliank.shoppinglist.data.ItemEntity
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +16,12 @@ import javax.inject.Inject
 class ShoppingListViewModel @Inject constructor(
     val itemDAO: ItemDAO
 ) : ViewModel() {
-    fun getAllItems(): Flow<List<ItemEntity>> {
-        return itemDAO.getAllItems()
+    fun getAllItems(filteredCategory: Category?): Flow<List<ItemEntity>> {
+        if (filteredCategory != null) {
+            filteredCategory.let {
+                return itemDAO.getAllFilteredItems(it)
+            }
+        } else return itemDAO.getAllItems()
     }
 
     fun addItem(item: ItemEntity) {

@@ -13,6 +13,9 @@ interface ItemDAO {
     @Query("SELECT * from items")
     fun getAllItems(): Flow<List<ItemEntity>>
 
+    @Query("SELECT * from items WHERE items.category = :category")
+    fun getAllFilteredItems(category: Category): Flow<List<ItemEntity>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: ItemEntity)
 
