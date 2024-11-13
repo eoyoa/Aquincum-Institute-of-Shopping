@@ -106,7 +106,7 @@ fun ItemDialog(itemId: UUID = UUID.randomUUID(), onSubmit: (Item) -> Unit, butto
                     },
                     enabled = valid
                 ) {
-                    Text("Add item")
+                    Text(buttonText)
                 }
             }
         }
