@@ -23,6 +23,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import im.juliank.shoppinglist.shopping.EditItemDialog
+import im.juliank.shoppinglist.shopping.Item
 import im.juliank.shoppinglist.shopping.ItemCard
 import im.juliank.shoppinglist.shopping.NewItemDialog
 import im.juliank.shoppinglist.shopping.ShoppingListViewModel
@@ -34,9 +36,15 @@ fun ShoppingListScreen(
     viewModel: ShoppingListViewModel = viewModel()
 ) {
     var showNewItemDialog by remember { mutableStateOf(false) }
+    var currentItemToEdit: Item? by remember { mutableStateOf(null) }
 
     if (showNewItemDialog) {
         NewItemDialog(onDismissRequest = { showNewItemDialog = false })
+    }
+    else if (currentItemToEdit != null) {
+        currentItemToEdit?.let {
+            EditItemDialog(it, onDismissRequest = { currentItemToEdit = null })
+        }
     }
 
     Scaffold(
@@ -79,7 +87,12 @@ fun ShoppingListScreen(
                     modifier = modifier.fillMaxHeight()
                 ) {
                     items(allItems) {
-                        ItemCard(it)
+                        ItemCard(
+                            it,
+                            onEdit = {
+                                currentItemToEdit = it
+                            }
+                        )
                     }
                 }
             }

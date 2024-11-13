@@ -37,18 +37,45 @@ fun NewItemDialog(onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel
         onSubmit = {
             viewModel.addItem(it)
         },
-        buttonText = "Add Item",
+        buttonText = "Add item",
         onDismissRequest = onDismissRequest
     )
 }
 
 @Composable
-fun ItemDialog(itemId: UUID = UUID.randomUUID(), onSubmit: (Item) -> Unit, buttonText: String, onDismissRequest: () -> Unit = {}) {
-    var name by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-    var description: String? by remember { mutableStateOf(null) }
-    var category by remember { mutableStateOf(Category.FOOD) }
-    var bought by remember { mutableStateOf(false) }
+fun EditItemDialog(item: Item, onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
+    ItemDialog(
+        itemId = item.id,
+        onSubmit = {
+            viewModel.editItem(it)
+            onDismissRequest()
+        },
+        buttonText = "Edit item",
+        prefilledName = item.name,
+        prefilledPrice = item.price.toString(),
+        prefilledDescription = item.description,
+        prefilledCategory = item.category,
+        prefilledStatus = item.status
+    )
+}
+
+@Composable
+fun ItemDialog(
+    itemId: UUID = UUID.randomUUID(),
+    onSubmit: (Item) -> Unit,
+    buttonText: String,
+    onDismissRequest: () -> Unit = {},
+    prefilledName: String = "",
+    prefilledPrice: String = "",
+    prefilledDescription: String? = null,
+    prefilledCategory: Category = Category.FOOD,
+    prefilledStatus: Boolean = false
+) {
+    var name by remember { mutableStateOf(prefilledName) }
+    var price by remember { mutableStateOf(prefilledPrice) }
+    var description: String? by remember { mutableStateOf(prefilledDescription) }
+    var category by remember { mutableStateOf(prefilledCategory) }
+    var bought by remember { mutableStateOf(prefilledStatus) }
 
     val validName = name != ""
     var validPrice by remember { mutableStateOf(false) }

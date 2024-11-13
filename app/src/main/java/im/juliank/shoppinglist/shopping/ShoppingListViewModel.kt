@@ -24,14 +24,12 @@ class ShoppingListViewModel: ViewModel() {
         items.clear()
     }
 
-    fun editItem(id: UUID, category: Category, name: String, description: String?, price: Float, status: Boolean) {
-        var toEdit = items.find { it.id == id }
+    fun editItem(item: Item) {
+        var toEdit = items.find { it.id == item.id }
         toEdit?.let {
-            it.category = category
-            it.name = name
-            it.description = description
-            it.price = price
-            it.status = status
+            val index = items.indexOf(toEdit)
+            items.removeAt(index)
+            items.add(index, item)
         }
     }
 }

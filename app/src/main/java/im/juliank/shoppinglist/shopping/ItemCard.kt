@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -23,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.UUID
 
 @Composable
-fun ItemCard(item: Item, viewModel: ShoppingListViewModel = viewModel()) {
+fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -64,6 +65,16 @@ fun ItemCard(item: Item, viewModel: ShoppingListViewModel = viewModel()) {
                     null
                 )
             }
+            IconButton(
+                onClick = {
+                    onEdit(item)
+                }
+            ) {
+                Icon(
+                    Icons.Rounded.Edit,
+                    null
+                )
+            }
         }
     }
 }
@@ -71,5 +82,7 @@ fun ItemCard(item: Item, viewModel: ShoppingListViewModel = viewModel()) {
 @Preview
 @Composable
 fun ItemCardPreview() {
-    ItemCard(Item(UUID.randomUUID(), Category.FOOD, "Test name", null, 123.45f, true))
+    ItemCard(Item(UUID.randomUUID(), Category.FOOD, "Test name", null, 123.45f, true), onEdit = {
+        
+    })
 }
