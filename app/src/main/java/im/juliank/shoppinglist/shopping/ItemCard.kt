@@ -52,7 +52,16 @@ fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewMode
             Checkbox(
                 item.status,
                 onCheckedChange = {
-                    // todo: after editing items is added
+                    viewModel.editItem(
+                        Item(
+                            item.id,
+                            item.category,
+                            item.name,
+                            item.description,
+                            item.price,
+                            it
+                        )
+                    )
                 }
             )
             IconButton(
@@ -83,6 +92,6 @@ fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewMode
 @Composable
 fun ItemCardPreview() {
     ItemCard(Item(UUID.randomUUID(), Category.FOOD, "Test name", null, 123.45f, true), onEdit = {
-        
+
     })
 }
