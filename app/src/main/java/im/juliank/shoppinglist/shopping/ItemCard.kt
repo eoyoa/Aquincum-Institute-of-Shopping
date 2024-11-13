@@ -20,11 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import im.juliank.shoppinglist.data.Category
+import im.juliank.shoppinglist.data.ItemEntity
 import java.util.UUID
 
 @Composable
-fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
+fun ItemCard(item: ItemEntity, onEdit: (ItemEntity) -> Unit, viewModel: ShoppingListViewModel = hiltViewModel()) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +55,7 @@ fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewMode
                 item.status,
                 onCheckedChange = {
                     viewModel.editItem(
-                        Item(
+                        ItemEntity(
                             item.id,
                             item.category,
                             item.name,
@@ -66,7 +68,7 @@ fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewMode
             )
             IconButton(
                 onClick = {
-                    viewModel.deleteItem(item.id)
+                    viewModel.deleteItem(item)
                 }
             ) {
                 Icon(
@@ -91,7 +93,7 @@ fun ItemCard(item: Item, onEdit: (Item) -> Unit, viewModel: ShoppingListViewMode
 @Preview
 @Composable
 fun ItemCardPreview() {
-    ItemCard(Item(UUID.randomUUID(), Category.FOOD, "Test name", null, 123.45f, true), onEdit = {
+    ItemCard(ItemEntity(UUID.randomUUID(), Category.FOOD, "Test name", null, 123.45f, true), onEdit = {
 
     })
 }

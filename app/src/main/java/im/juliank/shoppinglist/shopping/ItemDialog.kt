@@ -28,11 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import im.juliank.shoppinglist.data.Category
+import im.juliank.shoppinglist.data.ItemEntity
 import java.util.UUID
 
 @Composable
-fun NewItemDialog(onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
+fun NewItemDialog(onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = hiltViewModel()) {
     ItemDialog(
         onSubmit = {
             viewModel.addItem(it)
@@ -43,7 +45,7 @@ fun NewItemDialog(onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel
 }
 
 @Composable
-fun EditItemDialog(item: Item, onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = viewModel()) {
+fun EditItemDialog(item: ItemEntity, onDismissRequest: () -> Unit, viewModel: ShoppingListViewModel = hiltViewModel()) {
     ItemDialog(
         itemId = item.id,
         onSubmit = {
@@ -62,7 +64,7 @@ fun EditItemDialog(item: Item, onDismissRequest: () -> Unit, viewModel: Shopping
 @Composable
 fun ItemDialog(
     itemId: UUID = UUID.randomUUID(),
-    onSubmit: (Item) -> Unit,
+    onSubmit: (ItemEntity) -> Unit,
     buttonText: String,
     onDismissRequest: () -> Unit = {},
     prefilledName: String = "",
@@ -127,7 +129,7 @@ fun ItemDialog(
                 }
                 Button(
                     onClick = {
-                        onSubmit(Item(itemId, category, name, description, price.toFloat(), bought))
+                        onSubmit(ItemEntity(itemId, category, name, description, price.toFloat(), bought))
                         onDismissRequest()
                     },
                     enabled = valid

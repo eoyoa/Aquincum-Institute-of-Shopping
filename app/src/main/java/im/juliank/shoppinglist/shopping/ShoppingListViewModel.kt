@@ -1,43 +1,48 @@
 package im.juliank.shoppinglist.shopping
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import java.util.UUID
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import im.juliank.shoppinglist.data.ItemDAO
+import im.juliank.shoppinglist.data.ItemEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShoppingListViewModel: ViewModel() {
-    var items = mutableStateListOf<Item>()
-
-    fun addItem(item: Item) {
-        Log.d("ADD_ITEM", "adding new item $item")
-        items.add(item)
-        Log.d("ADD_ITEM", "done, items are now $items")
+@HiltViewModel
+class ShoppingListViewModel @Inject constructor(
+    val itemDAO: ItemDAO
+) : ViewModel() {
+    fun getAllItems(): Flow<List<ItemEntity>> {
+        return itemDAO.getAllItems()
     }
 
-    fun deleteItem(id: UUID) {
-        items.removeIf {
-            it.id == id
+    fun addItem(item: ItemEntity) {
+        Log.d("ADD_ITEM", "adding new item $item")
+        viewModelScope.launch(Dispatchers.IO) {
+            itemDAO.insert(item)
+        }
+        Log.d("ADD_ITEM", "done")
+    }
+
+    fun deleteItem(item: ItemEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            itemDAO.delete(item)
         }
     }
 
     fun deleteAllItems() {
-        items.clear()
+        viewModelScope.launch(Dispatchers.IO) {
+            itemDAO.deleteAllItems()
+        }
     }
 
-    fun editItem(item: Item) {
-        var toEdit = items.find { it.id == item.id }
-        toEdit?.let {
-            val index = items.indexOf(toEdit)
-            items.removeAt(index)
-            items.add(index, item)
+    fun editItem(item: ItemEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            itemDAO.update(item)
         }
     }
 }
 
-data class Item(var id: UUID, var category: Category, var name: String, var description: String?, var price: Float, var status: Boolean)
-
-enum class Category {
-    FOOD,
-    SUPPLY,
-    BOOK
-}
