@@ -1,4 +1,4 @@
-package im.juliank.shoppinglist.screen.shoppinglist
+package im.juliank.shoppinglist.ui.screen.shoppinglist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,6 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import im.juliank.shoppinglist.shopping.ItemCard
+import im.juliank.shoppinglist.shopping.NewItemDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

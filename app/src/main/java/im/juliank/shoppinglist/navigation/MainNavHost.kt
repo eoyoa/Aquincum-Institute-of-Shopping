@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import im.juliank.shoppinglist.screen.shoppinglist.ShoppingListScreen
-import im.juliank.shoppinglist.screen.splash.SplashScreen
+import im.juliank.shoppinglist.ui.screen.shoppinglist.ShoppingListScreen
+import im.juliank.shoppinglist.ui.screen.splash.SplashScreen
 
 @Composable
 fun ShoppingNavHost(

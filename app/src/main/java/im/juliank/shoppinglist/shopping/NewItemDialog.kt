@@ -1,4 +1,4 @@
-package im.juliank.shoppinglist.screen.shoppinglist
+package im.juliank.shoppinglist.shopping
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import im.juliank.shoppinglist.ui.screen.shoppinglist.Category
+import im.juliank.shoppinglist.ui.screen.shoppinglist.Item
+import im.juliank.shoppinglist.ui.screen.shoppinglist.ShoppingListViewModel
 
 @Composable
 fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListViewModel = viewModel()) {
@@ -89,7 +92,15 @@ fun NewItemDialog(onDismissRequest: () -> Unit = {}, viewModel: ShoppingListView
                 }
                 Button(
                     onClick = {
-                        viewModel.addItem(Item(category, name, description, price.toFloat(), bought))
+                        viewModel.addItem(
+                            Item(
+                                category,
+                                name,
+                                description,
+                                price.toFloat(),
+                                bought
+                            )
+                        )
                         onDismissRequest()
                     },
                     enabled = valid

@@ -1,4 +1,4 @@
-package im.juliank.shoppinglist.screen.shoppinglist
+package im.juliank.shoppinglist.shopping
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import im.juliank.shoppinglist.ui.screen.shoppinglist.Category
+import im.juliank.shoppinglist.ui.screen.shoppinglist.Item
 
 @Composable
 fun ItemCard(item: Item) {

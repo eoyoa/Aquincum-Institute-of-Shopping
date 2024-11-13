@@ -1,4 +1,4 @@
-package im.juliank.shoppinglist.screen.shoppinglist
+package im.juliank.shoppinglist.ui.screen.shoppinglist
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
