@@ -3,6 +3,7 @@ package im.juliank.shoppinglist.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import im.juliank.shoppinglist.R
 import java.io.Serializable
 import java.util.UUID
 
@@ -16,8 +17,8 @@ data class ItemEntity (
     @ColumnInfo(name = "status") var status: Boolean
 ): Serializable
 
-enum class Category {
-    FOOD,
-    SUPPLY,
-    BOOK
+enum class Category(val drawableId: Int) {
+    FOOD(R.drawable.baseline_fastfood_24),
+    SUPPLY(R.drawable.baseline_newspaper_24),
+    BOOK(R.drawable.baseline_menu_book_24)
 }
